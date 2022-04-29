@@ -1,0 +1,131 @@
+{
+  "settingsProject": {
+    "urlGetLoginToken": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/get2fa",
+    "urlClearTestCards": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/clearTestCards",
+    "urlCleanAccountFlags": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/cleanAccountFlags",
+    "urlDeleteAllUserCards": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/deleteAllUserCards",
+    "siftSettingsUlr": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/updateSiftFlow",
+    "siftSettingsEvents":[
+                          "$app_launch",
+                          "$create_account",
+                          "$create_order",
+                          "$create_order_lapsed_60_days",
+                          "$login",
+                          "$logout",
+                          "$transaction",
+                          "$update_account",
+                          "phone_number_changed",
+                          "phone_number_added",
+                          "payment_method_updated",
+                          "payment_method_deleted",
+                          "payment_method_added",
+                          "password_changed",
+                          "name_changed"]
+  },
+
+  "twoFaActivity": {
+    "twofaAuthScreen": "2faViewController",
+    "twofaViewControllerInput1": "2faViewController-input-1",
+    "twofaViewControllerResendCodeBtn": "2faViewController-resendCodeBtn",
+    "twofaViewControllerHelpTxt": "2faViewController-helpTxt",
+    "twofaViewControllerBackBtn": "2faViewController-backBtn"
+  },
+
+  "cognitoTwofaActivity": {
+    "cognitoTwofaAuthScreen": "cognito2faViewController",
+    "cognitoTwofaViewControllerInput1": "cognito2faViewController-input-1",
+    "cognitoTwofaViewControllerResendCodeBtn": "cognito2faViewController-resendCodeBtn",
+    "cognitoTwofaViewControllerHelpTxt": "cognito2faViewController-helpTxt",
+    "cognitoTwofaViewControllerBackBtn": "cognito2faViewController-backBtn"
+  },
+
+  "launchActivity": {
+    "launchScreen": "launchViewController",
+    "launchViewControllerLogInBtn": "launchViewController-logInBtn"
+  },
+
+  "loginActivity": {
+    "loginScreen": "loginViewController",
+    "loginViewControllerEmailInput": "loginViewController-email-input",
+    "loginViewControllerPasswordInput": "loginViewController-password-input",
+    "loginViewControllerForgotPassBtn": "loginViewController-forgotPasswordBtn",
+    "loginViewControllerBackBtn": "loginViewController-backBtn",
+    "loginViewControllerLogInBtn": "loginViewController-logInBtn"
+  },
+
+  "dashboardActivity": {
+    "dashboard": "dashboardViewController",
+    "btnProfile": "accountBtn",
+    "btnHome": "homeBtn",
+    "loadingScreen":"Loading"
+  },
+
+  "profileActivity": {
+    "accountScreen": "accountViewController",
+    "loadingScreen": "accountViewController-loadingScreen",
+    "nameScreen": "",
+    "phoneScreen": "",
+    "transactionScreen": "",
+    "creditCardScreen": "creditCardViewController",
+    "paymentCardScreen": "paymentCardsViewController",
+
+    "openPaymentsBtn": "accountViewController-paymentCardsBtn",
+    "openNameBtn": "accountViewController-openNameBtn",
+    "openphoneBtn": "accountViewController-openPhoneBtn",
+    "openTransactionBtn": "accountViewController-openTransactionBtn",
+    "deleteMyAccountScreen": "accountViewController-openDeleteAccountBtn",
+    "logOutBtn":"accountViewController-logoutButton"
+  },
+
+  "paymentCardActivity": {
+    "paymentCardScreen": "paymentCardsViewController",
+    "backButton": "paymentCardViewController-backBtn",
+    "addCardButton": "paymentCardViewController-addCard",
+    "textCardLast4": "x4242",
+    "textCardPrimary": "(primary)"
+  },
+
+  "creditCardActivity": {
+    "creditCardScreen": "creditCardViewController",
+    "skipBtn": "creditCardViewController-skipBtn",
+    "backBtn": "creditCardViewController-backBtn",
+    "submitBtn": "creditCardViewController-submitCard",
+    "inputCardNumber": "card number",
+    "inputExpirationDate": "expiration date",
+    "inputCVC": "CVC",
+    "inputCVV": "CVV",
+    "inputZIP": "//XCUIElementTypeOther[@name=\"ZIP, MM/YY, 4242424242424242\"]/XCUIElementTypeOther/XCUIElementTypeTextField[3]",
+    "duplicateCreditCardMsg":"This card already exists in our system. Please add a new card. Contact customer service at 888-416-6161 or help@moocho.com for help.",
+    "invalidCreditCardInfoMsg":"Please enter a valid card number, expiration date, CVC code, and zip code.",
+    "invalidCreditCardInfoMsgExpDate":"Please verify that the expiration date entered is correct, and entered in the format MMYY.",
+    "siftErrorMsg":"Your account has been deactivated. Please contact customer service",
+    "creditCardSuccess": "SUCCESS",
+    "loadingSavingScreen":"Saving"
+  },
+  
+  "editCreditCardActivity": {
+    "editCreditCardScreen": "paymentCardEditViewController",
+    "makePrimaryCardBtn":"paymentCardEditViewController-makePrimaryCardBtn",
+    "removeCardBtn":"paymentCardEditViewController-removeCardBtn",
+    "updateExpDateCardBtn":"paymentCardEditViewController-updateExpDateCardBtn",
+    "primaryCardTextFlag":"paymentCardEditViewController-primaryCardTextFlag",
+    "expirationDateTextFlag":"paymentCardEditViewController-expirationDateTextFlag",
+    "backBtn":"paymentCardEditViewController-backBtn",
+    "removeCardSubmitBtn":"Yes, Remove It",
+    "removeCardSuccessMsg": "Card removed successfully",
+    "loadingWaitingScreen":"Waiting...",
+    "loadingSavingScreen":"Saving"
+  },
+
+  "expirationDateCardActivity": {
+    "editExpDateScreen": "editExpDateViewController",
+    "inputDate": "editExpDateViewController-input",
+    "submitBtn":"editExpDateViewController-submit",
+    "canceltBtn":"editExpDateViewController-cancel",
+    "loadingSavingScreen":"Saving",
+    "editExpDateSuccessMsg":"Your credit card was updated successfully."
+    
+  },
+
+  "loadingElement": "In progress"
+}
