@@ -545,4 +545,35 @@ describe("Login Test Fail" ,() => {
 
     });
 
+
+    test("[Failure] Log In — Not Fraud / Unathorized", async () => {
+          
+      await api.post(structure.settingsProject.urlBlockAccount,{"email": userTest[0].email,"type": "BLOCK"})
+
+      /*Wait for lauch app*/
+      await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
+              
+      let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
+      await logInBtn.click();
+
+      let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
+      await emailField.sendKeys(userTest[0].email);
+
+      let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
+      await passwordField.sendKeys(userTest[0].password);
+
+      let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
+      await logInBtnGo.click();
+
+      //await for UIAlert
+      await waitForElementUntilAppear("Okay",driver)      
+      let textFromAlert =  await driver.alertText()      
+      await driver.dismissAlert()
+
+      let backBtn = await driver.elementById(structure.loginActivity.loginViewControllerBackBtn)
+      await backBtn.click()
+
+      expect(structure.loginActivity.userBlockedMessage).toContain(textFromAlert)      
+    });
+
 });
