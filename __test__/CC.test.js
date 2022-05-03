@@ -235,7 +235,7 @@ describe('SIFT TESTS', () => {
     })
 
   afterAll(async () => {    
-    await api.post(structure.settingsProject.siftSettingsUlr,{"events":["payment_method_updated","payment_method_deleted","payment_method_added",], "status": false })
+    await api.post(structure.settingsProject.siftSettingsUlr,{"events":["payment_method_updated","payment_method_deleted","payment_method_added"], "status": false })
   });
 
   test('[Failure] Add Card (Sift Block) - VISA ', async () => {    
