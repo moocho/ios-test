@@ -4,6 +4,7 @@
     "urlClearTestCards": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/clearTestCards",
     "urlCleanAccountFlags": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/cleanAccountFlags",
     "urlDeleteAllUserCards": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/deleteAllUserCards",
+    "urlBlockAccount": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/blockAccount",
     "siftSettingsUlr": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/updateSiftFlow",
     "siftSettingsEvents":[
                           "$app_launch",
@@ -50,7 +51,11 @@
     "loginViewControllerPasswordInput": "loginViewController-password-input",
     "loginViewControllerForgotPassBtn": "loginViewController-forgotPasswordBtn",
     "loginViewControllerBackBtn": "loginViewController-backBtn",
-    "loginViewControllerLogInBtn": "loginViewController-logInBtn"
+    "loginViewControllerLogInBtn": "loginViewController-logInBtn",
+    "incorrectUserNameOrPasswordMessage":"Username or pasword do not match.",
+    "userBlockedMessage":"Your account has been locked due to too many incorrect attempts. Please reset your password or contact customer service at 888-416-6161 or help@moocho.com.",
+    "userBlockedMessage2FA":"Your account has been locked due to too many incorrect attempts. Please reset your password or contact customer service at 888-416-6161 or help@moocho.com",
+    "loginViewControllerLoading":"loginViewController-loading"
   },
 
   "dashboardActivity": {

@@ -351,6 +351,19 @@ module.exports.findIosElement = async (element, driver) => {
   );
 };
 
+//waitForElementUntilDisappearByXPath
+
+module.exports.findIosElementByXPath = async (element, driver) => {
+  return driver.elementByXPath(element).then(
+    function (webElement) {
+      return true;
+    },
+    function (err) {
+      return false;
+    }
+  );
+};
+
 module.exports.findIosElementDisplayed = async (element, driver,asserters) => {  
   return driver.waitForElementById(element,asserters.isDisplayed,50,25
   ).then(
@@ -368,6 +381,17 @@ module.exports.waitForElementUntilDisappear = async (element, driver) => {
   let itemFound = true;
   while (itemFound && Date.now() - startTime < 15000) {      
     itemFound = await this.findIosElement(element, driver);    
+  }
+  if (itemFound) {
+    throw new Error(`TimeOut on element dissapears\n  element: ${element}`);
+  }
+};
+
+module.exports.waitForElementUntilDisappearByXPath = async (element, driver) => {
+  var startTime = Date.now();
+  let itemFound = true;
+  while (itemFound && Date.now() - startTime < 5000) {      
+    itemFound = await this.findIosElementByXPath(element, driver);    
   }
   if (itemFound) {
     throw new Error(`TimeOut on element dissapears\n  element: ${element}`);
@@ -403,6 +427,7 @@ module.exports.waitForTwoElementUntilAppears = async (element1,element2, driver)
     return item2 ? element2 : ""
 
   };
+  
 
 module.exports.findSiftErrorMessage = async (driver) => {  
       
