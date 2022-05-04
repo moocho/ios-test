@@ -390,7 +390,7 @@ module.exports.waitForElementUntilDisappear = async (element, driver) => {
 module.exports.waitForElementUntilDisappearByXPath = async (element, driver) => {
   var startTime = Date.now();
   let itemFound = true;
-  while (itemFound && Date.now() - startTime < 5000) {      
+  while (itemFound && Date.now() - startTime < 6500) {      
     itemFound = await this.findIosElementByXPath(element, driver);    
   }
   if (itemFound) {

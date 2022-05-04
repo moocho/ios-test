@@ -614,22 +614,11 @@ describe("Login SIFT" ,() => {
 
     await twofaCodeInput.sendKeys(twoFaCode[0].validation_token)
 
-    //if 2fa code is correct 2fa screen disappears  
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
-
-    let elementDisplayed = await waitForTwoElementUntilAppears(structure.dashboardActivity.dashboard,structure.creditCardActivity.creditCardScreen,driver)
-    
-    if(elementDisplayed === structure.creditCardActivity.creditCardScreen){
-      let skipCreditCardScreen = await driver.elementById(structure.creditCardActivity.skipBtn)
-      await skipCreditCardScreen.click()
-    }  
-
     //await for UIAlert
-    await waitForElementUntilAppear("Okay",driver)      
+    await waitForElementUntilAppear(structure.siftActivity.SiftButton,driver)      
     let textFromAlert =  await driver.alertText()       
     await driver.dismissAlert()
-
-    expect(textFromAlert).toContain(structure.loginActivity.userBlockedMessageSift)
+    expect(textFromAlert).toContain(structure.siftActivity.SiftMessage)
   
   });
 

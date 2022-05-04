@@ -45,6 +45,12 @@
     "launchViewControllerLogInBtn": "launchViewController-logInBtn"
   },
 
+  "siftActivity": {
+    "SiftMessageTitle":"Alt error message?**",
+    "SiftMessage":"Deactivated, sucker!!!",
+    "SiftButton":"Damn, tho"
+  },
+
   "loginActivity": {
     "loginScreen": "loginViewController",
     "loginViewControllerEmailInput": "loginViewController-email-input",
