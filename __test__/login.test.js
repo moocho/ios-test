@@ -2,10 +2,8 @@ const wd = require("wd");
 const driver = wd.promiseChainRemote("http://127.0.0.1:4723/wd/hub/");
 const asserters = wd.asserters;
 const structure = require("../commons/structure.json");
-const {
-  login,
-  openSettings,
-  findIosElement,
+const {  
+  openSettings,  
   waitForTwoElementUntilAppears,
   waitForElementUntilAppear,
   waitForElementUntilDisappear,

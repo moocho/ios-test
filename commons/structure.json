@@ -141,5 +141,21 @@
     
   },
 
+  "giftCardActivity":{
+    "giftCardScreen":"giftCardViewController"
+
+  },
+
+  "merchantActivity":{
+    "merchantViewCellActivity":{
+      "merchantViewCellMerchantName":"merchantViewCell-merchantName",
+      "merchantViewCellDealOrRewardContainer":"merchantViewCell-DealOrRewardContainer",
+      "merchantViewCellDealIcon":"merchantViewCell-Deal-Icon",
+      "merchantViewCellRewardIcon":"merchantViewCell-Reward-Icon",
+      "merchantViewCellImageRegular":"merchantViewCell-Image-regular",
+      "merchantViewCellImageEgift":"merchantViewCell-Image-egift"
+    }
+  },
+
   "loadingElement": "In progress"
 }
