@@ -58,10 +58,13 @@
     "loginViewControllerForgotPassBtn": "loginViewController-forgotPasswordBtn",
     "loginViewControllerBackBtn": "loginViewController-backBtn",
     "loginViewControllerLogInBtn": "loginViewController-logInBtn",
-    "incorrectUserNameOrPasswordMessage":"Username or pasword do not match.",
+    "incorrectUserNameOrPasswordMessage":"Incorrect username or password.",
+    "incorrectUserNameOrPasswordMessageBad":"Username or pasword do not match.",
     "userBlockedMessage":"Your account has been locked due to too many incorrect attempts. Please reset your password or contact customer service at 888-416-6161 or help@moocho.com.",
     "userBlockedMessageSift":"Your account has been deactivated for security purposes. If you believe this was an error, please contact Moocho customer service at help@moocho.com or 888-416-6161",
-    "loginViewControllerLoading":"loginViewController-loading"
+    "loginViewControllerLoading":"loginViewController-loading",
+    "attempsCountLogin":"6th attempt should receive pop up",
+    "attempsCountTwofa":"5th attempt should receive pop up"
   },
 
   "dashboardActivity": {

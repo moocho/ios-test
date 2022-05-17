@@ -66,232 +66,250 @@ describe("Login Test Success", () => {
         await driver.waitForElementById(structure.launchActivity.launchScreen, asserters.isDisplayed, 60000, 100);
 
       })
+    //1  
+    test.skip("[Success] Log In — SMS autofill", async () => {
+      console.log("1. [Success] Log In — SMS autofill")
+      /*Wait for lauch app*/
+      await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
 
-  test("[Success] Log In — SMS autofill", async () => {
-    console.log("[Success] Log In — SMS autofill")
-    /*Wait for lauch app*/
-    await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
+      /*login set data and go*/
+      await loginSetCredentials(driver, asserters, userTest[0].email, userTest[0].password);
 
-    /*login set data and go*/
-    await loginSetCredentials(driver, asserters, userTest[0].email, userTest[0].password);
+    });
+    //2
+    test("[Success] Log In — SMS manual fill", async () => {
+      console.log("2. [Success] Log In — SMS manual fill")
+      /*Wait for lauch app*/
+      await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
+              
+      let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
+      await logInBtn.click();
 
-  });
+      let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
+      await emailField.sendKeys(userTest[0].email);
 
-  test("[Success] Log In — SMS manual fill", async () => {
-    console.log("[Success] Log In — SMS manual fill")
-    /*Wait for lauch app*/
-    await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
-            
-    let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
-    await logInBtn.click();
+      let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
+      await passwordField.sendKeys(userTest[0].password);
 
-    let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
-    await emailField.sendKeys(userTest[0].email);
+      let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
+      await logInBtnGo.click();
 
-    let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
-    await passwordField.sendKeys(userTest[0].password);
+      //await for 2fa screen
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
 
-    let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
-    await logInBtnGo.click();
+      //set 2fa code 2 digits and clear
+      let setTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
+      await setTwofaCode.sendKeys(1234)
+      await setTwofaCode.clear()
 
-    //await for 2fa screen
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
+      //get 2fa real code
+      let twoFaCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
+      await setTwofaCode.sendKeys(twoFaCode[0].validation_token)
 
-    //set 2fa code 2 digits and clear
-    let setTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
-    await setTwofaCode.sendKeys(1234)
-    await setTwofaCode.clear()
+      //if 2fa code is correct 2fa screen disappears  
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
 
-    //get 2fa real code
-    let twoFaCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
-    await setTwofaCode.sendKeys(twoFaCode[0].validation_token)
+    });
+    //3
+    test("[Success] Log In — Resend Code to SMS", async () => {
+      console.log("3. [Success] Log In — Resend Code to SMS")
+      /*Wait for lauch app*/
+      await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
+              
+      let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
+      await logInBtn.click();
 
-    //if 2fa code is correct 2fa screen disappears  
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
+      let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
+      await emailField.sendKeys(userTest[0].email);
 
-  });
+      let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
+      await passwordField.sendKeys(userTest[0].password);
 
-  test("[Success] Log In — Resend Code to SMS", async () => {
-    console.log("[Success] Log In — Resend Code to SMS")
-    /*Wait for lauch app*/
-    await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
-            
-    let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
-    await logInBtn.click();
+      let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
+      await logInBtnGo.click();
 
-    let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
-    await emailField.sendKeys(userTest[0].email);
+      //await for 2fa screen
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
 
-    let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
-    await passwordField.sendKeys(userTest[0].password);
+      //get 2fa old code
+      let twoFaCodeOldCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
+      
+      //click on resend code
+      let resendButton = await driver.elementById(structure.twoFaActivity.twofaViewControllerResendCodeBtn)
+      await resendButton.click()
 
-    let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
-    await logInBtnGo.click();
+      //await for code send message
+      await waitForElementUntilAppear("We sent you a new code. Any old codes are no longer valid.",driver)
+      let alertBtnOkay = await driver.elementById("Okay")
+      await alertBtnOkay.click()      
 
-    //await for 2fa screen
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
+      //set 2FA INPUT
+      let inputTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
+      
+      //await 5 seconds for new code
+      await new Promise(resolve => setTimeout(resolve, 5000));
 
-    //get 2fa old code
-    let twoFaCodeOldCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
-    
-    //click on resend code
-    let resendButton = await driver.elementById(structure.twoFaActivity.twofaViewControllerResendCodeBtn)
-    await resendButton.click()
+      //set old code
+      await inputTwofaCode.sendKeys(twoFaCodeOldCode[0].validation_token)
 
-    //await for code send message
-    await waitForElementUntilAppear("We sent you a new code. Any old codes are no longer valid.",driver)
-    let alertBtnOkay = await driver.elementById("Okay")
-    await alertBtnOkay.click()      
+      //await for again 2fa screen
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
 
-    //set 2FA INPUT
-    let inputTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
-    
-    //await 5 seconds for new code
-    await new Promise(resolve => setTimeout(resolve, 5000));
+      // //get 2fa real code
+      let twoFaCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
+      
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-    //set old code
-    await inputTwofaCode.sendKeys(twoFaCodeOldCode[0].validation_token)
+      await inputTwofaCode.sendKeys(twoFaCode[0].validation_token)
 
-    //await for again 2fa screen
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
+      //if 2fa code is correct 2fa screen disappears  
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
 
-    // //get 2fa real code
-    let twoFaCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
-    
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    });
+    //4
+    test("[Success] Log In — Resend Code to Email", async () => {
+      console.log("4. [Success] Log In — Resend Code to Email")
+      /*Wait for lauch app*/
+      await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
+              
+      let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
+      await logInBtn.click();
 
-    await inputTwofaCode.sendKeys(twoFaCode[0].validation_token)
+      let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
+      await emailField.sendKeys(userTest[0].email);
 
-    //if 2fa code is correct 2fa screen disappears  
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
+      let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
+      await passwordField.sendKeys(userTest[0].password);
 
-  });
+      let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
+      await logInBtnGo.click();
 
-  test("[Success] Log In — Resend Code to Email", async () => {
-    console.log("[Success] Log In — Resend Code to Email")
-    /*Wait for lauch app*/
-    await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
-            
-    let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
-    await logInBtn.click();
+      //await for 2fa screen
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
 
-    let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
-    await emailField.sendKeys(userTest[0].email);
+      //get 2fa old code from phone number
+      let twoFaCodeOldCodePhoneNumber = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
 
-    let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
-    await passwordField.sendKeys(userTest[0].password);
+      //click on resend code by email
+      let resendButtonToEmail = await driver.elementById(structure.twoFaActivity.twofaViewControllerHelpTxt)
+      await resendButtonToEmail.click()
 
-    let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
-    await logInBtnGo.click();
+      //await for EMAIL code send message
+      await waitForElementUntilAppear("We sent a new code to your email. Any old codes are no longer valid.",driver)
+      let alertBtnOkay = await driver.elementById("Okay")
+      await alertBtnOkay.click()      
+      
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      //await for EMAIL 2fa screen
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
 
-    //await for 2fa screen
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
+      //get 2fa old code from email
+      let twoFaCodeOldCodeEmail = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
 
-    //get 2fa old code
-    let twoFaCodeOldCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
+      //click on resend code via EMAIL
+      let resendButton = await driver.elementById(structure.twoFaActivity.twofaViewControllerResendCodeBtn)
+      await resendButton.click()
 
-    //click on resend code by email
-    let resendButtonToEmail = await driver.elementById(structure.twoFaActivity.twofaViewControllerHelpTxt)
-    await resendButtonToEmail.click()
+      //await for code send message
+      await waitForElementUntilAppear("We sent you a new code. Any old codes are no longer valid.",driver)
+      alertBtnOkay = await driver.elementById("Okay")
+      await alertBtnOkay.click()     
 
-    //await for EMAIL code send message
-    await waitForElementUntilAppear("We sent a new code to your email. Any old codes are no longer valid.",driver)
-    let alertBtnOkay = await driver.elementById("Okay")
-    await alertBtnOkay.click()      
-    
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    
-    //await for EMAIL 2fa screen
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
+      //set 2FA INPUT
+      let inputTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
+      
+      //await 5 seconds for new code
+      await new Promise(resolve => setTimeout(resolve, 5000));
 
-    //click on resend code via EMAIL
-    let resendButton = await driver.elementById(structure.twoFaActivity.twofaViewControllerResendCodeBtn)
-    await resendButton.click()
+      /**** START: SET OLD CODES ****/
 
-    //await for code send message
-    await waitForElementUntilAppear("We sent you a new code. Any old codes are no longer valid.",driver)
-    alertBtnOkay = await driver.elementById("Okay")
-    await alertBtnOkay.click()     
+      console.log("SET FIRST CODE SMS - ",twoFaCodeOldCodePhoneNumber[0].validation_token)
+      //set first code - old code SMS
+      await inputTwofaCode.sendKeys(twoFaCodeOldCodePhoneNumber[0].validation_token)
 
-    //set 2FA INPUT
-    let inputTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
-    
-    //await 5 seconds for new code
-    await new Promise(resolve => setTimeout(resolve, 5000));
+      //await for again 2fa screen
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
 
-    //set old code
-    await inputTwofaCode.sendKeys(twoFaCodeOldCode[0].validation_token)
+      //await 5 seconds for new code
+      await new Promise(resolve => setTimeout(resolve, 5000));
 
-    //await for again 2fa screen
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
+      console.log("SET FIRST CODE EMAIL - ",twoFaCodeOldCodeEmail[0].validation_token)    
+      //set first code - old code Email
+      await inputTwofaCode.sendKeys(twoFaCodeOldCodeEmail[0].validation_token)
 
-    // //get 2fa real code from EMAIL
-    let twoFaCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
-    
-    await new Promise(resolve => setTimeout(resolve, 3000));
+      //await for again 2fa screen
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
 
-    await inputTwofaCode.sendKeys(twoFaCode[0].validation_token)
+      /**** END: SET OLD CODES ****/
+      
+      // GET 2fa real code from EMAIL
+      let twoFaCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
+      
+      await new Promise(resolve => setTimeout(resolve, 3000));
 
-    //if 2fa code is correct 2fa screen disappears  
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
+      console.log("SET CORRECT CODE EMAIL - ",twoFaCode[0].validation_token)    
+      await inputTwofaCode.sendKeys(twoFaCode[0].validation_token)
 
-  });
+      //if 2fa code is correct 2fa screen disappears  
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
 
-  test("[Success] Log In — Background App", async () => {
-    console.log("[Success] Log In — Background App")
-    /*Wait for lauch app*/
-    await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
-            
-    let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
-    await logInBtn.click();
+    });
+    //5
+    test("[Success] Log In — Background App", async () => {
+      console.log("5. [Success] Log In — Background App")
+      /*Wait for lauch app*/
+      await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
+              
+      let logInBtn = await driver.elementById(structure.launchActivity.launchViewControllerLogInBtn);
+      await logInBtn.click();
 
-    let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
-    await emailField.sendKeys(userTest[0].email);
+      let emailField = await driver.elementById(structure.loginActivity.loginViewControllerEmailInput);
+      await emailField.sendKeys(userTest[0].email);
 
-    let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
-    await passwordField.sendKeys(userTest[0].password);
+      let passwordField = await driver.elementById(structure.loginActivity.loginViewControllerPasswordInput);
+      await passwordField.sendKeys(userTest[0].password);
 
-    let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
-    await logInBtnGo.click();
+      let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
+      await logInBtnGo.click();
 
-    //await for 2fa screen
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
-    //get 2fa old code
-    let twoFaCodeOldCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
+      //await for 2fa screen
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isDisplayed, 60000, 100);
+      //get 2fa old code
+      let twoFaCodeOldCode = await api.post(structure.settingsProject.urlGetLoginToken,{"email": userTest[0].email})
 
-    //set app to background
-    await driver.backgroundApp(5);
+      //set app to background
+      await driver.backgroundApp(5);
 
-    //set 2FA INPUT
-    let inputTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
+      //set 2FA INPUT
+      let inputTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
 
-    //set  code
-    await inputTwofaCode.sendKeys(twoFaCodeOldCode[0].validation_token)
+      //set  code
+      await inputTwofaCode.sendKeys(twoFaCodeOldCode[0].validation_token)
 
-    //if 2fa code is correct 2fa screen disappears  
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
+      //if 2fa code is correct 2fa screen disappears  
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
 
-  });
+    });
+    //6
+    test("[Success] Log In — Fraud / Authorized", async () => {
+      console.log("6. [Success] Log In — Fraud / Authorized")
+      /*Wait for lauch app*/
+      await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
 
-  test("[Success] Log In — Fraud / Authorized", async () => {
-    console.log("[Success] Log In — Fraud / Authorized")
-    /*Wait for lauch app*/
-    await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
+      /*Change user to IsFraud=1 */
+      await api.post(structure.settingsProject.urlBlockAccount,{"email": userTest[0].email,"type": "FRAUD"})
 
-    /*Change user to IsFraud=1 */
-    await api.post(structure.settingsProject.urlBlockAccount,{"email": userTest[0].email,"type": "FRAUD"})
+      /*login set data and go*/
+      await loginSetCredentials(driver, asserters, userTest[0].email, userTest[0].password);
 
-    /*login set data and go*/
-    await loginSetCredentials(driver, asserters, userTest[0].email, userTest[0].password);
+      //if 2fa code is correct 2fa screen disappears  
+      await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
 
-    //if 2fa code is correct 2fa screen disappears  
-    await driver.waitForElementById(structure.twoFaActivity.twofaAuthScreen, asserters.isNotDisplayed, 60000, 100);
+      /*Change user to IsFraud=0 */
+      await api.post(structure.settingsProject.urlCleanAccountFlags,{"email": userTest[0].email})      
 
-    /*Change user to IsFraud=0 */
-    await api.post(structure.settingsProject.urlCleanAccountFlags,{"email": userTest[0].email})      
-
-  });
-
+    });
 });
 
 describe("Login Test Fail" ,() => {
@@ -300,9 +318,9 @@ describe("Login Test Fail" ,() => {
     /*CLEAR USER STATUS*/
     await api.post(structure.settingsProject.urlCleanAccountFlags,{"email": userTest[0].email})    
   })
-
+    //7
     test("[Failure] Log In — Incorrect Email", async () => {
-      console.log("[Failure] Log In — Incorrect Email")
+      console.log("7. [Failure] Log In — Incorrect Email")
       /*Wait for lauch app*/
       await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
               
@@ -331,9 +349,9 @@ describe("Login Test Fail" ,() => {
       expect(textFromAlert).toContain(structure.loginActivity.incorrectUserNameOrPasswordMessage)
 
     });
-
-    test("[Failure] Log In — Incorrect Password / Lock", async () => {
-      console.log("[Failure] Log In — Incorrect Password / Lock")
+    //8
+    test("[Failure] Log In — Incorrect Password / Lock", async () => {            
+      console.log("8. [Failure] Log In — Incorrect Password / Lock")
       /*Wait for lauch app*/
       await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
               
@@ -347,17 +365,28 @@ describe("Login Test Fail" ,() => {
       await passwordField.sendKeys("Abc1234.");
 
       let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
-    
-      var loopFlag = true
+          
+      let loopFlag = true
+      let textFromAlertBox = ""
+      let countLoop = 0
 
       while(loopFlag){
         await logInBtnGo.click();                
         await waitForElementUntilAppear("Okay",driver)
-        let textFromAlert =  await driver.alertText()      
+        textFromAlertBox =  await driver.alertText()      
         await driver.dismissAlert()
-        loopFlag = (textFromAlert === structure.loginActivity.incorrectUserNameOrPasswordMessage)
-      }
+        loopFlag = (textFromAlertBox === structure.loginActivity.incorrectUserNameOrPasswordMessage)
 
+        if(textFromAlertBox !== structure.loginActivity.incorrectUserNameOrPasswordMessage && textFromAlertBox !== structure.loginActivity.userBlockedMessage ){          
+          let backBtn = await driver.elementById(structure.loginActivity.loginViewControllerBackBtn)
+          await backBtn.click()
+          expect(textFromAlertBox).toContain(structure.loginActivity.incorrectUserNameOrPasswordMessage)
+          expect(textFromAlertBox).toContain(structure.loginActivity.userBlockedMessage)
+          break;
+        }
+        countLoop++
+      }
+            
       await emailField.clear()
       await passwordField.clear()
 
@@ -376,12 +405,15 @@ describe("Login Test Fail" ,() => {
       let backBtn = await driver.elementById(structure.loginActivity.loginViewControllerBackBtn)
       await backBtn.click()
 
+      //validate attemp account 6th attemp should receive pop up
+      expect(`${countLoop}th attempt should receive pop up`).toBe(structure.loginActivity.attempsCountLogin)      
+      //validate user message blocked
       expect(textAlert).toContain(structure.loginActivity.userBlockedMessage)
 
     });
-
+    //9
     test("[Failure] Log In — Incorrect 2FA / Lock", async () => {
-      console.log("[Failure] Log In — Incorrect 2FA / Lock")
+      console.log("9. [Failure] Log In — Incorrect 2FA / Lock")
       var loopFlag = true
       /*Wait for lauch app*/
       await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
@@ -403,6 +435,8 @@ describe("Login Test Fail" ,() => {
       //set 2FA INPUT
       let inputTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
 
+      let countLoop = 0
+
       while(loopFlag){        
         try{
           await new Promise(resolve => setTimeout(resolve, 2000));
@@ -415,6 +449,7 @@ describe("Login Test Fail" ,() => {
           await driver.dismissAlert()
           loopFlag = !(structure.loginActivity.userBlockedMessage.includes(textFromAlert))
         }
+        countLoop++
       }
 
       let close2fa = await driver.elementById(structure.twoFaActivity.twofaViewControllerBackBtn)
@@ -440,13 +475,14 @@ describe("Login Test Fail" ,() => {
 
       let backBtn = await driver.elementById(structure.loginActivity.loginViewControllerBackBtn)
       await backBtn.click()
-
+      
+      expect(`${countLoop}th attempt should receive pop up`).toBe(structure.loginActivity.attempsCountTwofa)      
       expect(textAlert).toContain(structure.loginActivity.userBlockedMessage)    
 
     });
-
+    //10
     test("[Failure] Log In — Incorrect Password + 2FA / Lock", async () => {
-      console.log("[Failure] Log In — Incorrect Password + 2FA / Lock")
+      console.log("10. [Failure] Log In — Incorrect Password + 2FA / Lock")
       var loopFlag = true
       /*Wait for lauch app*/
       await driver.waitForElementById(structure.launchActivity.launchScreen,asserters.isDisplayed,60000,100);
@@ -462,24 +498,20 @@ describe("Login Test Fail" ,() => {
 
       let logInBtnGo = await driver.elementById(structure.loginActivity.loginViewControllerLogInBtn);
       
-      var count = 1
+      var countLoginAttempts = 1
       var textFromAlert = ""
+      var textFromAlertLogin = ""
 
       //3 attempts to login
-      while(count <= 3){
+      while(countLoginAttempts <= 2){
         await logInBtnGo.click();
         await waitForElementUntilAppear("Okay",driver)
-        textFromAlert =  await driver.alertText()      
+        textFromAlertLogin =  await driver.alertText()      
         await driver.dismissAlert()        
-        count++
+        countLoginAttempts++
       }
-
-      // verify the correct message displayed
-      if(!structure.loginActivity.incorrectUserNameOrPasswordMessage.includes(textFromAlert)){
-        expect(structure.loginActivity.incorrectUserNameOrPasswordMessage).toContain(textFromAlert)    
-        return
-      }
-
+      countLoginAttempts-- 
+      
       //clear fields
       await new Promise(resolve => setTimeout(resolve, 1500));
       await emailField.clear()
@@ -497,6 +529,8 @@ describe("Login Test Fail" ,() => {
       //set 2FA INPUT
       let inputTwofaCode = await driver.elementById(structure.twoFaActivity.twofaViewControllerInput1)
 
+      var countTwoFaAttempts = 0
+
       while(loopFlag){        
         try{
           await new Promise(resolve => setTimeout(resolve, 2000));
@@ -509,6 +543,7 @@ describe("Login Test Fail" ,() => {
           await driver.dismissAlert()
           loopFlag = !(structure.loginActivity.userBlockedMessage.includes(textFromAlert))
         }
+        countTwoFaAttempts++
       }
 
       let close2fa = await driver.elementById(structure.twoFaActivity.twofaViewControllerBackBtn)
@@ -535,12 +570,15 @@ describe("Login Test Fail" ,() => {
       let backBtn = await driver.elementById(structure.loginActivity.loginViewControllerBackBtn)
       await backBtn.click()
 
-      expect(textAlert).toContain(structure.loginActivity.userBlockedMessage)    
-
+      expect(textFromAlertLogin).toContain(structure.loginActivity.incorrectUserNameOrPasswordMessage)
+      expect(`${countLoginAttempts} attempts login`).toBe("2 attempts login")
+      expect(`${countTwoFaAttempts}th attempt should receive pop up`).toBe("4th attempt should receive pop up")
+      expect(textAlert).toContain(structure.loginActivity.userBlockedMessage) 
+      
     });
-
+    //11
     test("[Failure] Log In — Not Fraud / Unathorized", async () => {
-      console.log("[Failure] Log In — Not Fraud / Unathorized")   
+      console.log("11. [Failure] Log In — Not Fraud / Unathorized")   
       await api.post(structure.settingsProject.urlBlockAccount,{"email": userTest[0].email,"type": "BLOCK"})
 
       /*Wait for lauch app*/
@@ -565,8 +603,8 @@ describe("Login Test Fail" ,() => {
 
       let backBtn = await driver.elementById(structure.loginActivity.loginViewControllerBackBtn)
       await backBtn.click()
-
-      expect(structure.loginActivity.userBlockedMessage).toContain(textFromAlert)      
+      textFromAlert
+      expect(textFromAlert).toContain(structure.loginActivity.userBlockedMessage)      
     });
 });
 
@@ -585,7 +623,7 @@ describe("Login SIFT" ,() => {
   });
 
   test("[Failure] Log In — Sift Block", async () => {   
-    console.log("[Failure] Log In — Sift Block")
+    console.log("12. [Failure] Log In — Sift Block")
     /*TURN ON SIFT SETTINGS*/
     await api.post(structure.settingsProject.siftSettingsUlr,{"events":[structure.settingsProject.siftSettingsEvents[4]], "status": true})
 
