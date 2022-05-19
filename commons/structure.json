@@ -140,10 +140,121 @@
     "editExpDateSuccessMsg":"Your credit card was updated successfully."
     
   },
+  "transactionsActivity":{
+    "transactionScreen":"transactionHistoryView",
+    "transactionHistoryViewCloseButton":"transactionHistoryView-closeButton"
+  },
 
   "giftCardActivity":{
-    "giftCardScreen":"giftCardViewController"
+    "giftCardScreen":"giftCardView",
+    "giftCardViewCloseBtn":"giftCardView-closeBtn",
+    "giftCardViewMerchantName":"giftCardView-merchantName",
+    "giftCardViewMerchantLogo":"giftCardView-merchantLogo",
+    "giftCardViewMerchantHeroImage":"giftCardView-merchantHeroImage",
+    "giftCardViewCalculatorTitle":"giftCardView-calculator-title",
+    "giftCardViewCalculatorAmountLabel":"giftCardView-calculator-amountLabel",
 
+    "giftCardViewYouWillPayLabel":"giftCardView-youWillPayLabel",
+    "giftCardViewYouWillPayButton":"giftCardView-youWillPayButton",
+    "giftCardViewYouWillPayLoading":"giftCardView-youWillPayLoading",
+    
+    "giftCardViewPayDetailView":"giftCardView-payDetailView",
+
+    "giftCardViewPayDetailViewTotalBill":"giftCardView-payDetailView-totalBill",
+
+    "giftCardViewPayDetailViewReward":"giftCardView-payDetailView-reward",
+    "giftCardViewPayDetailViewRewardValue":"giftCardView-payDetailView-reward-value",
+    "giftCardViewPayDetailViewRewardLabel":"giftCardView-payDetailView-reward-label",
+    "giftCardViewPayDetailViewRewardName":"giftCardView-payDetailView-reward-name",
+
+    "giftCardViewPayDetailViewDeal":"giftCardView-payDetailView-deal",
+    "giftCardViewPayDetailViewDealValue":"giftCardView-payDetailView-deal-value",
+    "giftCardViewPayDetailViewDealLabel":"giftCardView-payDetailView-deal-label",
+    "giftCardViewPayDetailViewDealName":"giftCardView-payDetailView-deal-name",
+
+    "giftCardViewPayDetailViewMerchant":"giftCardView-payDetailView-merchant",
+    "giftCardViewPayDetailViewMerchant2":"giftCardView-payDetailView-merchants",
+    "giftCardViewPayDetailViewMerchantValue":"giftCardView-payDetailView-merchant-value",
+    "giftCardViewPayDetailViewMerchantLable":"giftCardView-payDetailView-merchant-label",
+
+    "giftCardViewPayDetailViewMoochoCash":"giftCardView-payDetailView-moochoCash",
+    "giftCardViewPayDetailViewMoochoCash2":"giftCardView-payDetailView-moochoCashs",
+    "giftCardViewPayDetailViewMoochoCashValue":"giftCardView-payDetailView-moochoCash-value",
+    "giftCardViewPayDetailViewMoochoCashLabel":"giftCardView-payDetailView-moochoCash-label",
+
+    "giftCardViewPayDetailViewMoochoBonus":"giftCardView-payDetailView-moochoBonus",
+    "giftCardViewPayDetailViewMoochoBonus2":"giftCardView-payDetailView-moochoBonuss",
+    "giftCardViewPayDetailViewMoochoBonusValue":"giftCardView-payDetailView-moochoBonus-value",
+    "giftCardViewPayDetailViewMoochoBonusLabel":"giftCardView-payDetailView-moochoBonus-label",
+
+    "giftCardViewPayDetailViewAnyWhereCredit":"giftCardView-payDetailView-anyWhereCredit",
+    "giftCardViewPayDetailViewAnyWhereCredit2":"giftCardView-payDetailView-anyWhereCredits",
+    "giftCardViewPayDetailViewAnyWhereCreditValue":"giftCardView-payDetailView-anyWhereCredit-value",
+    "giftCardViewPayDetailViewAnyWhereCreditLabel":"giftCardView-payDetailView-anyWhereCredit-label",
+
+    "giftCardViewPayDetailViewCardOnFile":"giftCardView-payDetailView-cardOnFile",
+    "giftCardViewPayDetailViewCardOnFileValue":"giftCardView-payDetailView-cardOnFile-value",
+    "giftCardViewPayDetailViewCardOnFileLabel":"giftCardView-payDetailView-cardOnFile-label",
+
+    "giftCardViewPayDetailViewCloseButton":"giftCardView-payDetailView-closeButton",
+    
+    
+    "giftCardCardViewCalculator":{
+      "giftCardCardViewCalculatorNumberFour":"giftCardView-calculator-numberFour",
+      "giftCardCardViewCalculatorNumberSix":"giftCardView-calculator-numberSix",
+      "giftCardCardViewCalculatorNumberDoubleZero":"giftCardView-calculator-doubleZero",
+      "giftCardCardViewCalculatorNumberBack":"giftCardView-calculator-numberBack"
+    },
+
+    "giftCardViewDiscountBarTitle":"giftCardView-discountBar-title",
+    "giftCardViewDiscountBarTitleArrow":"giftCardView-discountBar-title-arrow",
+    "giftCardViewPayButton":"giftCardView-payNowButton",
+    "giftCardViewMinLabel":"giftCardView-minLabel",
+    "giftCardViewMaxLabel":"giftCardView-maxLabel",    
+    "giftCardViewInfoStepsBtn": "giftCardView-infoStepsButton",
+    "giftCardViewInfoView":"giftCardView-infoView",
+    "giftCardViewHowToPayView":"giftCardView-howToPayView",
+    "giftCardViewHowToPayViewCloseButton":"giftCardView-howToPayViewCloseButton",
+    "giftCardViewHowToPayViewTransactionButton": "giftCardView-howToPayView-transactionButton",
+
+    "giftCardViewOpenDiscountsButton": "giftCardView-openDiscountsButton",
+
+    "giftCardViewDiscountBarBody": "giftCardView-discountBarBody",    
+    "giftCardViewDiscountBarBodyTitle": "giftCardView-discountBarBody-title",
+    "giftCardViewDiscountBarBodyRow": "giftCardView-discountBarBody-row",
+    "giftCardViewDiscountBarBodyCloseButton": "giftCardView-discountBarBody-CloseButton",
+
+    "giftCardViewDiscountDeal": "giftCardView-discount-deal",
+    "giftCardViewDiscountDealIcon": "giftCardView-discount-dealIcon",
+    "giftCardViewDiscountDealLabel": "giftCardView-discount-dealLabel",
+    "giftCardViewDiscountDealButton": "giftCardView-discount-dealButton",
+
+    "giftCardViewDiscountReward": "giftCardView-discount-reward",
+    "giftCardViewDiscountRewardIcon": "giftCardView-discount-rewardIcon",
+    "giftCardViewDiscountRewardLabel": "giftCardView-discount-rewardLabel",
+    "giftCardViewDiscountRewardButton": "giftCardView-discount-rewardButton",
+
+
+    "giftCardViewDiscountAnywhereCredit": "giftCardView-discount-anywhereCredit",
+    "giftCardViewDiscountAnywhereCreditIcon": "giftCardView-discount-anywhereCreditIcon",
+    "giftCardViewDiscountAnywhereCreditLabel": "giftCardView-discount-anywhereCreditLabel",
+    "giftCardViewDiscountAnywhereCreditButton": "giftCardView-discount-anywhereCreditButton",
+
+
+    "giftCardViewDiscountMerchantCredit": "giftCardView-discount-merchantCredit",
+    "giftCardViewDiscountMerchantCreditIcon": "giftCardView-discount-merchantCreditIcon",
+    "giftCardViewDiscountMerchantCreditLabel": "giftCardView-discount-merchantCreditLabel",
+    "giftCardViewDiscountMerchantCreditButton": "giftCardView-discount-merchantCreditButton",
+
+    "giftCardViewDiscountMoochoCash": "giftCardView-discount-moochoCash",
+    "giftCardViewDiscountMoochoCashIcon": "giftCardView-discount-moochoCashIcon",
+    "giftCardViewDiscountMoochoCashLabel": "giftCardView-discount-moochoCashLabel",
+    "giftCardViewDiscountMoochoCashButton": "giftCardView-discount-moochoCashButton",
+
+    "giftCardViewDiscountMoochoBonusCash": "giftCardView-discount-moochoBonusCash",
+    "giftCardViewDiscountMoochoBonusCashIcon": "giftCardView-discount-moochoBonusCashIcon",
+    "giftCardViewDiscountMoochoBonusCashLabel": "giftCardView-discount-moochoBonusCashLabel",
+    "giftCardViewDiscountMoochoBonusCashButton": "giftCardView-discount-moochoBonusCashButton"
   },
 
   "merchantActivity":{
