@@ -252,10 +252,10 @@ module.exports.login = async (driver, asserters,email,pass) => {
   //await for dashboard  
   await driver.waitForElementById(structure.dashboardActivity.dashboard, asserters.isDisplayed, 60000, 100);
   
-  await driver.waitForElementById(structure.dashboardActivity.loadingScreen, asserters.isDisplayed, 60000, 100);  
+  //await driver.waitForElementById(structure.dashboardActivity.loadingScreen, asserters.isDisplayed, 60000, 100);  
   
   await this.waitForElementUntilDisappear(structure.dashboardActivity.loadingScreen, driver);  
-
+  
 };
 
 module.exports.backToDashboard = async (driver,asserters,wd) => {  
