@@ -222,8 +222,12 @@ describe("3. [Account A] Discount Dropdown — Deal & Reward (Unclaimed)", () =>
     })
     test("GET NOW button displaying", async () => {        
         console.log("GET NOW button displaying")
-        let rewardDiscountButton = await driver.elementById(structure.giftCardActivity.giftCardViewDiscountRewardButton)        
-        expect(rewardDiscountButton).not.toBe(null)        
+        let rewardDiscountButton = await driver.elementById(structure.giftCardActivity.giftCardViewDiscountRewardButton)   
+        let rewardDiscountButtonLabel = await driver.elementById(structure.giftCardActivity.giftCardViewDiscountRewardButtonLabel)
+        let rewardDiscountButtonLabelTxt = await rewardDiscountButtonLabel.text()
+        expect(rewardDiscountButton).not.toBe(null)
+        expect(rewardDiscountButtonLabelTxt).toBe("GET NOW")     
+          
     })
 
     //AnyWhereCredit
