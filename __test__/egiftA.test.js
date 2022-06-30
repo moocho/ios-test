@@ -3,13 +3,9 @@ const driver = wd.promiseChainRemote("http://127.0.0.1:4723/wd/hub/");
 const asserters = wd.asserters;
 const structure = require("../commons/structure.json");
 const {  
- findIosElement,
-  openSettings,  
-  waitForTwoElementUntilAppears,
-  waitForElementUntilAppear,
-  waitForElementUntilDisappear,
-  loginSetCredentials,
-  waitForElementUntilDisappearByXPath,login
+ findIosElement, 
+ waitForElementUntilDisappear,
+login
 } = require("../commons/commonsFunctions");
 const api = require("../api/api");
 
@@ -26,7 +22,7 @@ Account B
 */
 
 const userTest = [
-  { email: "ledr1993+delivery02@gmail.com", password: "Abc123." },
+  { email: "ledr1993+delivery02@gmail.com", password: "Abc1234" },
   { email: "ledr1993+delivery03@gmail.com", password: "Abc123." },
 ];
 
@@ -220,13 +216,13 @@ describe("3. [Account A] Discount Dropdown — Deal & Reward (Unclaimed)", () =>
         let rewardDiscountLabel = await driver.elementById(structure.giftCardActivity.giftCardViewDiscountRewardLabel)        
         expect(rewardDiscountLabel).not.toBe(null)        
     })
-    test("GET NOW button displaying", async () => {        
-        console.log("GET NOW button displaying")
+    test("TAP TO GET button displaying", async () => {        
+        console.log("TAP TO GET button displaying")
         let rewardDiscountButton = await driver.elementById(structure.giftCardActivity.giftCardViewDiscountRewardButton)   
         let rewardDiscountButtonLabel = await driver.elementById(structure.giftCardActivity.giftCardViewDiscountRewardButtonLabel)
         let rewardDiscountButtonLabelTxt = await rewardDiscountButtonLabel.text()
         expect(rewardDiscountButton).not.toBe(null)
-        expect(rewardDiscountButtonLabelTxt).toBe("GET NOW")     
+        expect(rewardDiscountButtonLabelTxt).toBe("TAP TO GET")     
           
     })
 

@@ -8,6 +8,7 @@
     "urlGetUserMooches": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/getMooches",
     "urlUpdateUserMooches": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/updateMooches",
     "siftSettingsUlr": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/updateSiftFlow",
+    "urlRemovePurchase": "https://058fsz3cja.execute-api.us-east-1.amazonaws.com/dev/removePurchases",
     "siftSettingsEvents":[
                           "$app_launch",
                           "$create_account",
@@ -206,6 +207,14 @@
       "giftCardCardViewCalculatorNumberSix":"giftCardView-calculator-numberSix",
       "giftCardCardViewCalculatorNumberDoubleZero":"giftCardView-calculator-doubleZero",
       "giftCardCardViewCalculatorNumberBack":"giftCardView-calculator-numberBack"
+    },
+
+    "giftCardCardViewCancelScreen":{
+      "giftCardViewCancelScreen":"giftCardView-cancelScreen",
+      "giftCardViewCancelScreenCancelBtn":"giftCardView-cancelScreen-cancelButton",
+      "giftCardViewCancelScreenTxtStatus":"giftCardView-cancelScreen-txtStatus",
+      "giftCardViewCancelScreenAnimation":"giftCardView-cancelScreen-animation"
+
     },
 
     "giftCardViewDiscountBarTitle":"giftCardView-discountBar-title",
