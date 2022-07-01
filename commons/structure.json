@@ -213,8 +213,14 @@
       "giftCardViewCancelScreen":"giftCardView-cancelScreen",
       "giftCardViewCancelScreenCancelBtn":"giftCardView-cancelScreen-cancelButton",
       "giftCardViewCancelScreenTxtStatus":"giftCardView-cancelScreen-txtStatus",
-      "giftCardViewCancelScreenAnimation":"giftCardView-cancelScreen-animation"
+      "giftCardViewCancelScreenAnimation":"giftCardView-cancelScreen-animation"      
+    },
 
+    "giftCardCardViewCheckOutScreen":{
+      "giftCardCardViewCheckOutScreen":"giftCardCardView-checkOutScreen",
+      "giftCardCardViewCheckOutScreenAmountLabel":"giftCardCardView-checkOutScreen-amountLabel",
+      "giftCardCardViewCheckOutScreenPinLabel":"giftCardCardView-checkOutScreen-pinLabel",
+      "giftCardCardViewCheckOutScreenCodeLabel":"giftCardCardView-checkOutScreen-codeLabel"
     },
 
     "giftCardViewDiscountBarTitle":"giftCardView-discountBar-title",

@@ -93,9 +93,9 @@ afterAll(async () => {
         let numberDoubleZero = await driver.elementById(structure.giftCardActivity.giftCardCardViewCalculator.giftCardCardViewCalculatorNumberDoubleZero)
         await numberDoubleZero.click()
         await numberDoubleZero.click()
+        await waitForElementUntilDisappear(structure.giftCardActivity.giftCardViewYouWillPayLoading,driver)
         //pay button
         let payButton =  await driver.elementById(structure.giftCardActivity.giftCardViewPayButton)
-        await new Promise(resolve => setTimeout(resolve, 3000));
         await payButton.click()        
         //cancel view
         let cancelView = await driver.waitForElementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreen, asserters.isDisplayed, 20000, 100)
@@ -263,7 +263,6 @@ afterAll(async () => {
         expect(amountCalculatorTxt).toBe("$400.00")
     })
 
-
     test("'You'll pay...' with correct amount to charge card and (i) icon persists", async () => {
         console.log("'You'll pay...' with correct amount to charge card and (i) icon persists")
         let youwillPayLabel = await driver.elementById(structure.giftCardActivity.giftCardViewYouWillPayLabel)
@@ -276,5 +275,240 @@ afterAll(async () => {
   });
 
   describe("2. [Account A] Cancel Screen → Processing Screen (success, with Deal)", () => {
+    console.log("2. [Account A] Cancel Screen → Processing Screen (success, with Deal)")
+    test("Cancel screen opens", async () => {        
+        console.log("Cancel screen opens")
+        let merchantItem = await driver.elementById(merchantTest[0].name)
+        await merchantItem.click()
+        //await for egift view
+        await driver.waitForElementById(structure.giftCardActivity.giftCardScreen, asserters.isDisplayed, 60000, 100);        
+        //set value
+        let number4 = await driver.elementById(structure.giftCardActivity.giftCardCardViewCalculator.giftCardCardViewCalculatorNumberFour)
+        await number4.click()    
+        let numberDoubleZero = await driver.elementById(structure.giftCardActivity.giftCardCardViewCalculator.giftCardCardViewCalculatorNumberDoubleZero)
+        await numberDoubleZero.click()
+        await numberDoubleZero.click()
+        await waitForElementUntilDisappear(structure.giftCardActivity.giftCardViewYouWillPayLoading,driver)
+        //pay button
+        let payButton =  await driver.elementById(structure.giftCardActivity.giftCardViewPayButton)        
+        await payButton.click()        
+        //cancel view
+        let cancelView = await driver.waitForElementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreen, asserters.isDisplayed, 20000, 100)
+        expect(cancelView).not.toBe(null)
+    })
+
+    test("text above total now says 'Checkout Amount' and does not include 'Enter'", async () => {        
+        console.log("text above total now says 'Checkout Amount' and does not include 'Enter'")        
+        let calculatorTitle = await driver.elementById(structure.giftCardActivity.giftCardViewCalculatorTitle)
+        let calculatorTitleTxt = await calculatorTitle.text()
+        expect(calculatorTitleTxt).toBe("Checkout Amount")
+    })
+
+    test("correct total that was entered persists and displays", async () => {        
+        console.log("correct total that was entered persists and displays")                
+        let amountCalculator = await driver.elementById(structure.giftCardActivity.giftCardViewCalculatorAmountLabel)
+        let amountCalculatorTxt = await amountCalculator.text()        
+        expect(amountCalculatorTxt).toBe("$400.00")
+    })
+
+    test("'You'll pay...' with correct amount to charge card and (i) icon persists", async () => {        
+        console.log("'You'll pay...' with correct amount to charge card and (i) icon persists")
+        let youwillPayLabel = await driver.elementById(structure.giftCardActivity.giftCardViewYouWillPayLabel)
+        let youWillPayButton = await driver.elementById(structure.giftCardActivity.giftCardViewYouWillPayButton)        
+        expect(youwillPayLabel).not.toBe(null)
+        expect(youWillPayButton).not.toBe(null)        
+    })
+
+    test("Status text says 'Getting ready to charge you...'", async () => {        
+        console.log("Status text says 'Getting ready to charge you...'")
+        let labelStatus = await driver.elementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreenTxtStatus)
+        let labelStatusTxt = await labelStatus.text()
+        expect(labelStatusTxt).toBe("Getting ready to\ncharge you...")                
+    })
+
+    test("'pie chart' animation begins loading", async () => {        
+        console.log("'pie chart' animation begins loading")
+        let animationPie = await driver.elementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreenAnimation)
+        expect(animationPie).not.toBe(null)
+    })
+
+    test("'Cancel & Go Back' button disappears immediately", async () => {        
+        console.log("'Cancel & Go Back' button disappears immediately")
+        await waitForElementUntilDisappear(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreenCancelBtn,driver)
+    })
+
+    test("'unwind' animation begins immediately", async () => {        
+        console.log("'unwind' animation begins immediately")
+        let unwindAnimation = await driver.elementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreenAnimation)
+        expect(unwindAnimation).not.toBe(null)
+    })
+
+    test("when 'unwind' animation completes, status text changes to 'Charging your Moocho account...'", async () => {        
+        //wait for text change
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("when 'unwind' animation completes, status text changes to 'Charging your Moocho account...'")
+        let labelStatus = await driver.elementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreenTxtStatus)
+        let labelStatusTxt = await labelStatus.text()
+        expect(labelStatusTxt).toBe("Charging your\nMoocho account...")                
+    });
+
+    test("when 'unwind' animation completes, 'processing' animation starts immediately", async () => {        
+        console.log("when 'unwind' animation completes, 'processing' animation starts immediately")
+        let unwindAnimation = await driver.elementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreenAnimation)
+        expect(unwindAnimation).not.toBe(null)
+    });
+
+    // -------------
+
+    test("Tap (i) pop up appears", async () => {        
+        console.log("Tap (i) pop up appears")
+        let youWillPayButton = await driver.elementById(structure.giftCardActivity.giftCardViewYouWillPayButton)
+        youWillPayButton.click()        
+        let payDetailPopUp = await driver.waitForElementById(structure.giftCardActivity.giftCardViewPayDetailView, asserters.isDisplayed, 20000, 100)
+        expect(payDetailPopUp).not.toBe(null)
+    })
+
+    test("First line is 'Total bill:'", async () => {
+        console.log("First line is 'Total bill:'")
+        let totalBill = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewTotalBill)        
+        expect(totalBill).not.toBe(null)
+    })
+
+    //DEALS
+    test("Next line is 'Minus Deal discount:'", async () => {
+        console.log("Next line is 'Minus Deal discount:'")
+        let minusDiscount = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewDeal)        
+        expect(minusDiscount).not.toBe(null)
+    })
+    test("Correct amount is displayed with minus sign in front of it", async () => {
+        console.log("Correct amount is displayed with minus sign in front of it")
+        let minusDiscountAmount = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewDealValue)        
+        let minusDiscountAmountTxt = await minusDiscountAmount.text()
+        let validateAmount = minusDiscountAmountTxt.includes('-')        
+        expect(validateAmount).toBe(true)
+    })
+    test("Correct Headline of Deal discount is displayed in red text underneath Deal discount line", async () => {     
+        console.log("Correct Headline of Deal discount is displayed in red text underneath Deal discount line")   
+        let minusDiscountName = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewDealName)        
+        let minusDiscountAmountTxt = await minusDiscountName.text()                
+        expect(minusDiscountAmountTxt).not.toBe("Applicable Discount!")
+    })
+
+    //ANYWHERE CREDIT
+    test("Next line is 'Minus Anywhere Credit:'", async () => {        
+        console.log("Next line is 'Minus Anywhere Credit:'")        
+        let anyWhereCredit = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewAnyWhereCredit)        
+        expect(anyWhereCredit).not.toBe(null)
+    })
+    test("Correct amount is displayed with minus sign in front of it", async () => {     
+        console.log("Correct amount is displayed with minus sign in front of it")   
+        let minusDiscountanyWhereCredit = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewAnyWhereCreditValue)        
+        let minusDiscountanyWhereCreditTxt = await minusDiscountanyWhereCredit.text()        
+        let validateAmount = minusDiscountanyWhereCreditTxt.includes('-')        
+        expect(validateAmount).toBe(true)
+    })
+
+    //MERCHANT CREDIT
+    test("Next line is 'Minus [merchant name] Credit:'", async () => {    
+        console.log("Next line is 'Minus [merchant name] Credit:'")            
+        let merchantCredit = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewMerchant)        
+        expect(merchantCredit).not.toBe(null)
+    })
+    test("Correct amount is displayed with minus sign in front of it", async () => {     
+        console.log("Correct amount is displayed with minus sign in front of it")   
+        let minusDiscountMerchantCredit = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewMerchantValue)        
+        let minusDiscountMerchantCreditTxt = await minusDiscountMerchantCredit.text()              
+        let validateAmount = minusDiscountMerchantCreditTxt.includes('-')        
+        expect(validateAmount).toBe(true)
+    })
+
+    //MOOCHOCASH CREDIT
+    test("Next line is 'Minus Moocho Cash:'", async () => {        
+        console.log("Next line is 'Minus Moocho Cash:'")        
+        let moochoCashCredit = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewMoochoCash)        
+        expect(moochoCashCredit).not.toBe(null)
+    })
+    test("Correct amount is displayed with minus sign in front of it", async () => {  
+        console.log("Correct amount is displayed with minus sign in front of it")      
+        let discountAmount = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewMoochoCashValue)        
+        let discountAmountTxt = await discountAmount.text()            
+        let validateAmount = discountAmountTxt.includes('-')        
+        expect(validateAmount).toBe(true)
+    })
+
+    //BONUSCASH CREDIT
+    test("Next line is 'Minus Bonus Cash:'", async () => {      
+        console.log("Next line is 'Minus Bonus Cash:'")  
+        //thisGonaFail
+        let bonusCashCredit = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewMoochoBonus)        
+        expect(bonusCashCredit).not.toBe(null)
+    })
+    test("Correct amount is displayed with minus sign in front of it", async () => {
+        console.log("Correct amount is displayed with minus sign in front of it")        
+        let discountAmount = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewMoochoBonusValue)        
+        let discountAmountTxt = await discountAmount.text()                   
+        let validateAmount = discountAmountTxt.includes('-')        
+        expect(validateAmount).toBe(true)
+    })
+
+    //CARD ON FILE
+    test("Next line is 'Card on file:'", async () => {          
+        console.log("Next line is 'Card on file:'")      
+        let cardOnFile = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewCardOnFileLabel)        
+        expect(cardOnFile).not.toBe(null)
+    })
+
+    test("pop up disappears", async () => {
+        console.log("pop up disappears")
+        let closePayDetail = await driver.elementById(structure.giftCardActivity.giftCardViewPayDetailViewCloseButton)
+        await closePayDetail.click()        
+        let discountBody = await findIosElement(structure.giftCardActivity.giftCardViewPayDetailView,driver)        
+        expect(discountBody).toBe(false)   
+    })
+
+
+    test("status text changes to 'Done! Time to complete your checkout.'", async () => {        
+        console.log("status text changes to 'Done! Time to complete your checkout.'")
+        let labelStatus = await driver.elementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreenTxtStatus)
+        let labelStatusTxt = await labelStatus.text()
+        let waitForLabelChange = true
+        
+        while(waitForLabelChange){
+            labelStatusTxt = await labelStatus.text()
+            waitForLabelChange = labelStatusTxt !== "Done! Time to complete\nyour checkout."
+        }
+
+        expect(labelStatusTxt).toBe("Done! Time to complete\nyour checkout.")                
+    })
+
+    test("'done' animation begins immediately when 'Done!...' text appears", async () => {        
+        console.log("'done' animation begins immediately when 'Done!...' text appears")
+        let unwindAnimation = await driver.elementById(structure.giftCardActivity.giftCardCardViewCancelScreen.giftCardViewCancelScreenAnimation)
+        expect(unwindAnimation).not.toBe(null)
+    })
+
+    test("after 'done' animation completes, Checkout screen opens", async () => {        
+        console.log("after 'done' animation completes, Checkout screen opens")
+       //await for egift view
+       let checkOutScreen = await driver.waitForElementById(structure.giftCardActivity.giftCardCardViewCheckOutScreen.giftCardCardViewCheckOutScreen, asserters.isDisplayed, 60000, 100);
+       expect(checkOutScreen).not.toBe(null)
+    })
+
+
+    test("Correct amount entered is displaying", async () => {        
+        console.log("Correct amount entered is displaying")        
+        let amountLabel = await driver.elementById(structure.giftCardActivity.giftCardCardViewCheckOutScreen.giftCardCardViewCheckOutScreenAmountLabel)
+        let amountLabelTxt = await amountLabel.text()        
+        expect(amountLabelTxt).toBe("$400.00")
+    })
+
+    test("Two numerical values are displaying (one for code # and one for PIN)", async () => {        
+        let codeLabel = await driver.elementById(structure.giftCardActivity.giftCardCardViewCheckOutScreen.giftCardCardViewCheckOutScreenCodeLabel)
+        let pinLabel = await driver.elementById(structure.giftCardActivity.giftCardCardViewCheckOutScreen.giftCardCardViewCheckOutScreenPinLabel)
+        expect(codeLabel).not.toBe(null)
+        expect(pinLabel).not.toBe(null)              
+    })
+
+    //Two numerical values are displaying (one for code # and one for PIN)
 
   });
